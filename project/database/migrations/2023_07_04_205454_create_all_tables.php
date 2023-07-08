@@ -11,19 +11,21 @@ return new class extends Migration
      */
     public function up(): void
     {
+        Schema::create('projects', function (Blueprint $table) {
+            $table->id();
+            $table->string("name",100)->unique();
+            $table->string("code",100)->unique();
+            $table->timestamps();
+        });
+
         Schema::create('sprints', function (Blueprint $table) {
             $table->id();
             $table->date('start_date');
             $table->date('end_date');
             $table->enum('status', ['abierto', 'cerrado','pendiente'])->default('pendiente');;
             $table->timestamps();
-        });
-
-        Schema::create('projects', function (Blueprint $table) {
-            $table->id();
-            $table->string("name",100)->unique();
-            $table->string("code",100)->unique();
-            $table->timestamps();
+            $table->foreignId("project_id")->constrained("projects")
+            ->onUpdate("cascade")->onDelete("restrict");
         });
 
         Schema::create('states', function (Blueprint $table) {
@@ -40,6 +42,8 @@ return new class extends Migration
             $table->foreignId("state_id")->constrained("states")
             ->onUpdate("cascade")->onDelete("restrict");
             $table->timestamps();
+            $table->foreignId("project_id")->constrained("projects")
+            ->onUpdate("cascade")->onDelete("restrict");
         });
 
         Schema::create('user_stories', function (Blueprint $table) {
