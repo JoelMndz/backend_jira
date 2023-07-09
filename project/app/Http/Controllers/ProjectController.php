@@ -16,6 +16,7 @@ class ProjectController extends Controller
         ->whereHas('users', function ($query) use ($user_id) {
             $query->where('users.id', $user_id);
         })
+        ->where("status",true)
         ->get();
         return response()->json($data);
     }
@@ -85,17 +86,10 @@ class ProjectController extends Controller
 
     public function delete(Project $project)
     {
-        $userValid = AssignedUser::
-            where("user_id", Auth::id())
-            ->where("project_id", $project->id)
-            ->where("isAdmin", true)
-            ->first();
-        if (!$userValid) {
-            return response()->json([
-                "error" => "Acción no permitida"
-            ], 400);
-        }
-        $project->delete();
+        $project->update([
+            "id"=> $project->id,
+            "status" => false
+        ]);
         return response()->json($project);
     }
 }
