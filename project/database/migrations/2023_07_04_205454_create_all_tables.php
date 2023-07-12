@@ -18,12 +18,14 @@ return new class extends Migration
             $table->boolean("status")->default(true);
             $table->timestamps();
         });
-
+        
         Schema::create('sprints', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
             $table->date('start_date');
             $table->date('end_date');
             $table->enum('status', ['abierto', 'cerrado','pendiente'])->default('pendiente');;
+            $table->boolean("is_delete")->default(false);
             $table->timestamps();
             $table->foreignId("project_id")->constrained("projects")
             ->onUpdate("cascade")->onDelete("restrict");
