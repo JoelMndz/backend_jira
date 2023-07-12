@@ -34,7 +34,9 @@ return new class extends Migration
         Schema::create('states', function (Blueprint $table) {
             $table->id();
             $table->string("name");
-            $table->boolean("isFinally");
+            $table->boolean("isFinally")->default(false);
+            $table->foreignId("project_id")->constrained("projects")
+            ->onUpdate("cascade")->onDelete("restrict");
             $table->timestamps();
         });
 

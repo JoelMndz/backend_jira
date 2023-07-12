@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\AssignedUser;
 use App\Models\Project;
+use App\Models\States;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -43,6 +44,9 @@ class ProjectController extends Controller
             "project_id"=> $project->id
         ]);
         $assignedUser->save();
+        States::create(['name' => 'pendiente', "project_id" => $project->id]);
+        States::create(['name' => 'en progreso', "project_id" => $project->id]);
+        States::create(['name' => 'terminado', "project_id" => $project->id, 'isFinally' => true]);
         return response()->json($project);
     }
 

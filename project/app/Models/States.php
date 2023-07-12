@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class States extends Model
 {
     //use HasFactory;
-    protected $fillable = ["name","isFinally"];
+    protected $fillable = ["name","isFinally","project_id"];
 }
