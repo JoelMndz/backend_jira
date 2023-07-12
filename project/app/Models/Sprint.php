@@ -9,5 +9,5 @@ class Sprint extends Model
 {
     //use HasFactory;
 
-    protected $fillable = ["start_date","end_date","status","project_id"];
+    protected $fillable = ["name", "start_date","end_date","status","project_id", "is_delete"];
 }

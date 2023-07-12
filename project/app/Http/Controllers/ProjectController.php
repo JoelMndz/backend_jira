@@ -11,6 +11,7 @@ class ProjectController extends Controller
 {
     public function getAll()
     {
+
         $user_id = Auth::id();
         $data = Project::with('users')
         ->whereHas('users', function ($query) use ($user_id) {

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AssignedUserController;
+use App\Http\Controllers\SprintController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProjectController;
@@ -27,8 +28,18 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('/auth/login', 'login');
 });
 
-Route::middleware(['auth:sanctum'])->group(function () {
 
+Route::middleware(['auth:sanctum'])->group(function () {
+    
+    Route::controller(SprintController::class)->group(function(){
+        Route::get('/sprint/{code}','getAll');
+        // Route::get('/sprint/{idProject}','getAll');
+        Route::post('/sprint/new','create');
+        Route::patch('/sprint/project/{sprint}','update');
+        Route::patch('/sprint/{sprint}/state','updateStatus');
+        Route::delete('/sprint/{sprint}','destroy');
+    });
+    
     Route::controller(ProjectController::class)->group(function () {
         Route::get('/project', 'getAll');
         Route::get('/project/{id}', 'show');
