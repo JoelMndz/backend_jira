@@ -54,6 +54,8 @@ return new class extends Migration
             $table->string("name",100);
             $table->string("description",100);
             $table->integer("points");
+            $table->foreignId("user_id")->constrained("users")
+            ->onUpdate("cascade")->onDelete("restrict");
             $table->foreignId("epic_id")->constrained("epics")
             ->onUpdate("cascade")->onDelete("restrict");
             $table->foreignId("state_id")->constrained("states")
