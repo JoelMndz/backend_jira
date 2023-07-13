@@ -42,13 +42,14 @@ return new class extends Migration
 
         Schema::create('epics', function (Blueprint $table) {
             $table->id();
-            $table->string("name",100);
-            $table->string("description",100);
-            $table->foreignId("state_id")->constrained("states")
-            ->onUpdate("cascade")->onDelete("restrict");
+            $table->string("name", 100);
+            $table->string("description", 255)->nullable();
             $table->timestamps();
+
+            $table->foreignId("state_id")->constrained("states")
+                ->onUpdate("cascade")->onDelete("restrict");
             $table->foreignId("project_id")->constrained("projects")
-            ->onUpdate("cascade")->onDelete("restrict");
+                ->onUpdate("cascade")->onDelete("restrict");
         });
 
         Schema::create('user_stories', function (Blueprint $table) {
