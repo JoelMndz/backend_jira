@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AssignedUserController;
+use App\Http\Controllers\EpicsController;
 use App\Http\Controllers\SprintController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -30,6 +31,11 @@ Route::controller(AuthController::class)->group(function () {
 
 
 Route::middleware(['auth:sanctum'])->group(function () {
+
+    Route::controller(EpicsController::class)->group(function(){
+        Route::get('/project/{project}/epic/all', 'getAll');
+        Route::post('/project/{project}/epic', 'create');
+    });
     
     Route::controller(SprintController::class)->group(function(){
         Route::get('/sprint/{code}','getAll');
